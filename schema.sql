@@ -11,13 +11,13 @@ CREATE TABLE tog (
 CREATE TABLE avganger (
     avgangs_id INT PRIMARY KEY,
     avgang_tog_nr TEXT NOT NULL,
-    FOREIGN KEY (avgang_tog_nr) REFERENCES tog(tog_nr),
     fra_stasjons_id INT NOT NULL,
-    FOREIGN KEY (fra_stasjons_id) REFERENCES stasjoner(stasjons_id),
     til_stasjons_id INT NOT NULL,
-    FOREIGN KEY (til_stasjons_id) REFERENCES stasjoner(stasjons_id),
     avgangstid TEXT NOT NULL,
-    plattform INT
+    plattform INT,
+    FOREIGN KEY (avgang_tog_nr) REFERENCES tog(tog_nr),
+    FOREIGN KEY (fra_stasjons_id) REFERENCES stasjoner(stasjons_id),
+    FOREIGN KEY (til_stasjons_id) REFERENCES stasjoner(stasjons_id)
 );
 CREATE TABLE billetter (
     billett_id INT PRIMARY KEY,
@@ -35,18 +35,18 @@ CREATE TABLE billetter (
         )
     ),
     billett_fra_id INT NOT NULL,
-    FOREIGN KEY (billett_fra_id) REFERENCES stasjoner(stasjons_id),
     billett_til_id INT NOT NULL,
-    FOREIGN KEY (billett_til_id) REFERENCES stasjoner(stasjons_id),
     tid_kjøpt TEXT NOT NULL,
     tid_utløpt TEXT NOT NULL,
     tid_aktivert TEXT NOT NULL,
-    pris INT NOT NULL CHECK (pris >= 0)
+    pris INT NOT NULL CHECK (pris >= 0),
+    FOREIGN KEY (billett_fra_id) REFERENCES stasjoner(stasjons_id),
+    FOREIGN KEY (billett_til_id) REFERENCES stasjoner(stasjons_id)
 );
 CREATE TABLE forsinkelser (
     forsinkelse_id INT PRIMARY KEY,
     forsinkelse_avgangs_id INT NOT NULL,
-    FOREIGN KEY (forsinkelse_avgangs_id) REFERENCES avganger(avgangs_id),
     forsinkelse_dato TEXT NOT NULL,
-    minutter_forsinket INT NOT NULL
+    minutter_forsinket INT NOT NULL,
+    FOREIGN KEY (forsinkelse_avgangs_id) REFERENCES avganger(avgangs_id)
 );
