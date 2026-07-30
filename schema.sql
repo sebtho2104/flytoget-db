@@ -1,0 +1,52 @@
+CREATE TABLE stasjoner (
+    stasjons_id INT PRIMARY KEY,
+    navn TEXT NOT NULL
+);
+CREATE TABLE tog (
+    tog_nr TEXT PRIMARY KEY,
+    tog_type TEXT NOT NULL,
+    antall_seter INT NOT NULL,
+    antall_togsett INT NOT NULL CHECK (antall_togsett IN (1, 2))
+);
+CREATE TABLE avganger (
+    avgangs_id INT PRIMARY KEY,
+    avgang_tog_nr TEXT NOT NULL,
+    FOREIGN KEY (avgang_tog_nr) REFERENCES tog(tog_nr),
+    fra_stasjons_id INT NOT NULL,
+    FOREIGN KEY (fra_stasjons_id) REFERENCES stasjoner(stasjons_id),
+    til_stasjons_id INT NOT NULL,
+    FOREIGN KEY (til_stasjons_id) REFERENCES stasjoner(stasjons_id),
+    avgangstid TEXT NOT NULL,
+    plattform INT
+);
+CREATE TABLE billetter (
+    billett_id INT PRIMARY KEY,
+    kunde_navn TEXT,
+    billett_type TEXT NOT NULL CHECK (
+        billett_type IN (
+            'voksen',
+            'student',
+            'honnør',
+            'ungdom',
+            'vernepliktig',
+            'barn',
+            'hentebillett',
+            'flytog-ansatt'
+        )
+    ),
+    billett_fra_id INT NOT NULL,
+    FOREIGN KEY (billett_fra_id) REFERENCES stasjoner(stasjons_id),
+    billett_til_id INT NOT NULL,
+    FOREIGN KEY (billett_til_id) REFERENCES stasjoner(stasjons_id),
+    tid_kjøpt TEXT NOT NULL,
+    tid_utløpt TEXT NOT NULL,
+    tid_aktivert TEXT NOT NULL,
+    pris INT NOT NULL CHECK (pris >= 0)
+);
+CREATE TABLE forsinkelser (
+    forsinkelse_id INT PRIMARY KEY,
+    forsinkelse_avgangs_id INT NOT NULL,
+    FOREIGN KEY (forsinkelse_avgangs_id) REFERENCES avganger(avgangs_id),
+    forsinkelse_dato TEXT NOT NULL,
+    minutter_forsinket INT NOT NULL
+);
