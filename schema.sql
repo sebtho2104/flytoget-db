@@ -19,6 +19,16 @@ CREATE TABLE avganger (
     FOREIGN KEY (fra_stasjons_id) REFERENCES stasjoner(stasjons_id),
     FOREIGN KEY (til_stasjons_id) REFERENCES stasjoner(stasjons_id)
 );
+CREATE TABLE stopp (
+    stopp_id INT PRIMARY KEY,
+    avgangs_id INT NOT NULL,
+    stasjons_id INT NOT NULL,
+    rekkefolge INT NOT NULL,
+    ankomst_tid TEXT,
+    avgangs_tid TEXT,
+    FOREIGN KEY (avgangs_id) REFERENCES avganger(avgangs_id),
+    FOREIGN KEY (stasjons_id) REFERENCES stasjoner(stasjons_id)
+);
 CREATE TABLE billetter (
     billett_id INT PRIMARY KEY,
     kunde_navn TEXT,
