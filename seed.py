@@ -27,5 +27,18 @@ stasjoner = [
 
 cur.executemany("INSERT INTO stasjoner (stasjons_id, navn) VALUES (?, ?)", stasjoner)
 
+tog = [
+    (1, 78, 238),
+    (2, 78, 238),
+    (3, 78, 238),
+    (4, 78, 238),
+    (5, 71, 250),
+    (6, 71, 250),
+    (7, 71, 250),
+    (8, 71, 250)
+]
+
+cur.executemany("INSERT INTO tog (tog_nr, tog_type, antall_seter) VALUES (?, ?, ?)", tog)
+
 conn.commit()
 conn.close()
