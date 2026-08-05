@@ -4,13 +4,13 @@ CREATE TABLE stasjoner (
 );
 CREATE TABLE tog (
     tog_nr TEXT PRIMARY KEY,
-    tog_type TEXT NOT NULL,
+    tog_type INT NOT NULL,
     antall_seter INT NOT NULL,
-    antall_togsett INT NOT NULL CHECK (antall_togsett IN (1, 2))
 );
 CREATE TABLE avganger (
     avgangs_id INT PRIMARY KEY,
     avgang_tog_nr TEXT NOT NULL,
+    antall_togsett INT NOT NULL CHECK (antall_togsett IN (1, 2)),
     fra_stasjons_id INT NOT NULL,
     til_stasjons_id INT NOT NULL,
     avgangstid TEXT NOT NULL,
