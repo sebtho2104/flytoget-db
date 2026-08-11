@@ -1,5 +1,7 @@
 import os
 import sqlite3
+from datetime import datetime, timedelta
+from ruter import lag_stopp
 
 DB_FILE = "flytoget.db"
 
@@ -25,14 +27,20 @@ stasjoner = [
     (10, "Drammen")
 ]
 
-cur.executemany("INSERT INTO stasjoner (stasjons_id, navn) VALUES (?, ?)", stasjoner)
+cur.executemany(
+    "INSERT INTO stasjoner (stasjons_id, navn) VALUES (?, ?)", 
+    stasjoner
+)
 
 tog = [
     (1, 78, 238), (2, 71, 250), (3, 78, 238), (4, 71, 250), (5, 78, 238),
     (6, 71, 250), (7, 78, 238), (8, 71, 250), (9, 78, 238), (10, 71, 250),
     (11, 78, 238), (12, 71, 250), (13, 78, 238)
 ]
-cur.executemany("INSERT INTO tog (tog_nr, tog_type, antall_seter) VALUES (?, ?, ?)", tog)
+cur.executemany(
+    "INSERT INTO tog (tog_nr, tog_type, antall_seter) VALUES (?, ?, ?)", 
+    tog
+)
 
 avganger = [
     (3701, 1, 2, 10, 1, '06:00', 2), (3702, 1, 1, 1, 10, '07:28', 1),
@@ -54,8 +62,16 @@ avganger = [
     (3733, 12, 1, 6, 1, '10:17', 2), (3734, 12, 1, 1, 6, '11:09', 1),
     (3735, 13, 1, 3, 1, '10:50', 2), (3736, 13, 1, 1, 3, '11:29', 1),
 ]
-cur.executemany("INSERT INTO avganger (avgangs_id, avgang_tog_nr, antall_togsett, fra_stasjons_id, til_stasjons_id, avgangstid, plattform) VALUES (?, ?, ?, ?, ?, ?, ?)", avganger)
+cur.executemany(
+    "INSERT INTO avganger (avgangs_id, avgang_tog_nr, antall_togsett, fra_stasjons_id, til_stasjons_id, avgangstid, plattform) VALUES (?, ?, ?, ?, ?, ?, ?)", 
+    avganger
+    )
 
+stopp = lag_stopp(avganger)
+cur.executemany(
+    "INSERT INTO stopp (stopp_id, avgangs_id, stasjons_id, rekkefolge, ankomst_tid, avgangs_tid) VALUES (?, ?, ?, ?, ?, ?)",
+    stopp 
+)
 
 
 conn.commit()
