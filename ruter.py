@@ -5,7 +5,7 @@ GARDEMOEN, LILLESTROM, OSLO_S, NATIONALTHEATRET, SKOYEN, STABEKK, LYSAKER, SANDV
 RUTER = {
     "drammen": {
         "stasjoner": [DRAMMEN, ASKER, SANDVIKA, LYSAKER, SKOYEN, NATIONALTHEATRET, OSLO_S, LILLESTROM, GARDEMOEN],
-        "segmenter": [13, 6, 6, 3, 4, 18, 12],
+        "segmenter": [13, 6, 6, 3, 4, 6, 18, 12],
     },
     "direkte": {
         "stasjoner": [OSLO_S, GARDEMOEN],
@@ -37,7 +37,7 @@ def lag_stopp(avganger):
 
         if fra != stasjoner[0]:
             stasjoner = list(reversed(stasjoner))
-            segment = list(reversed(segment))
+            segmenter = list(reversed(segmenter))
 
         tid = datetime.strptime(avgangstid, "%H:%M")
         for i, stasjon in enumerate(stasjoner):
@@ -47,5 +47,4 @@ def lag_stopp(avganger):
             stopp_id += 1
             if i < len(segmenter):
                 tid += timedelta(minutes=segmenter[i])
-
-        return stopp
+    return stopp

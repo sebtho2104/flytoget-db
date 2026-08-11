@@ -80,6 +80,22 @@ cur.executemany(
     priser,
 )
 
+billetter = [
+    (1, 'Ole Hansen', 'voksen', 10, 1, '2025-05-01 08:15', '2025-07-30 08:15', 'ja', 324),
+    (2, 'Kari Nilsen', 'student', 3, 1, '2025-05-03 09:30', '2025-08-01 09:30', 'ja', 134),
+    (3, None, 'voksen', 1, 3, '2025-05-10 14:00', '2025-08-08 14:00', 'nei', 268),
+    (4, 'Per Olsen', 'honnør', 9, 1, '2025-05-12 07:45', '2025-08-10 07:45', 'ja', 154),
+    (5, 'Mona Berg', 'barn', 10, 1, '2025-05-15 12:00', '2025-08-13 12:00', 'nei', 0),
+    (6, None, 'flytog-ansatt', 3, 1, '2025-05-18 06:30', '2025-08-16 06:30', 'ja', 0),
+    (7, 'Jonas Aas', 'ungdom', 6, 1, '2025-05-20 16:20', '2025-08-18 16:20', 'ja', 134),
+    (8, 'Ida Kristiansen', 'barn', 1, 10, '2025-05-22 11:10', '2025-08-20 11:10', 'nei', 162),
+    (9, 'Erik Solheim', 'vernepliktig', 3, 1, '2025-05-25 18:00', '2025-08-23 18:00', 'ja', 134),
+    (10, None, 'hentebillett', 1, 3, '2025-05-28 13:45', '2025-08-26 13:45', 'nei', 268),
+]
+cur.executemany(
+    "INSERT INTO billetter (billett_id, kunde_navn, billett_type, billett_fra_id, billett_til_id, tid_kjøpt, tid_utløpt, aktivert, pris) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    billetter
+)
 
 conn.commit()
 conn.close()
