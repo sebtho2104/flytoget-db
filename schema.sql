@@ -29,6 +29,13 @@ CREATE TABLE stopp (
     FOREIGN KEY (avgangs_id) REFERENCES avganger(avgangs_id),
     FOREIGN KEY (stasjons_id) REFERENCES stasjoner(stasjons_id)
 );
+CREATE TABLE priser(
+    pris_id INT PRIMARY KEY,
+    stasjons_id INT NOT NULL,
+    billett_type TEXT NOT NULL,
+    pris INT NOT NULL CHECK (pris >= 0),
+    FOREIGN KEY (stasjons_id) REFERENCES stasjoner(stasjons_id)
+);
 CREATE TABLE billetter (
     billett_id INT PRIMARY KEY,
     kunde_navn TEXT,
@@ -48,7 +55,7 @@ CREATE TABLE billetter (
     billett_til_id INT NOT NULL,
     tid_kjøpt TEXT NOT NULL,
     tid_utløpt TEXT NOT NULL,
-    tid_aktivert TEXT NOT NULL,
+    aktivert TEXT NOT NULL DEFAULT 'nei' CHECK (aktivert IN ('ja', 'nei')),
     pris INT NOT NULL CHECK (pris >= 0),
     FOREIGN KEY (billett_fra_id) REFERENCES stasjoner(stasjons_id),
     FOREIGN KEY (billett_til_id) REFERENCES stasjoner(stasjons_id)
