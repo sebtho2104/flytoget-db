@@ -12,7 +12,7 @@ conn = sqlite3.connect(DB_FILE) # kobler til og lager (om det ikke finnes) datab
 cur = conn.cursor() # gjør det mulig å kjøre SQL gjennom tilkoblingen
 cur.execute("PRAGMA foreign_keys = ON") #ensures foreign keys are actually enforced
 
-with open("schema.sql") as f:
+with open("schema.sql", encoding="utf-8") as f:
     cur.executescript(f.read()) # les all teksten fra filen, og kjør sql setningene i den
 
 stasjoner = [
@@ -95,6 +95,23 @@ billetter = [
 cur.executemany(
     "INSERT INTO billetter (billett_id, kunde_navn, billett_type, billett_fra_id, billett_til_id, tid_kjøpt, tid_utløpt, aktivert, pris) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
     billetter
+)
+
+forsinkelser = [
+    (1, 3733, '2025-05-01', 3),
+    (2, 3735, '2025-05-08', 8),
+    (3, 3707, '2025-05-05', 5),
+    (4, 3733, '2025-05-19', 4),
+    (5, 3702, '2025-05-15', 18),
+    (6, 3701, '2025-05-01', 5),
+    (7, 3707, '2025-05-05', 4),
+    (8, 3731, '2025-05-01', 4),
+    (9, 3707, '2025-05-19', 4),
+    (10, 3719, '2025-05-05', 22)
+]
+cur.executemany(
+    "INSERT INTO forsinkelser (forsinkelse_id, forsinkelse_avgangs_id, forsinkelse_dato, minutter_forsinket) VALUES (?, ?, ?, ?)",
+    forsinkelser
 )
 
 conn.commit()
