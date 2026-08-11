@@ -1,7 +1,7 @@
 import os
 import sqlite3
-from datetime import datetime, timedelta
 from ruter import lag_stopp
+from priser import lag_priser, hent_pris
 
 DB_FILE = "flytoget.db"
 
@@ -10,7 +10,7 @@ if os.path.exists(DB_FILE): # sjekker og sletter flytoget.db om den finnes
 
 conn = sqlite3.connect(DB_FILE) # kobler til og lager (om det ikke finnes) database
 cur = conn.cursor() # gjør det mulig å kjøre SQL gjennom tilkoblingen
-cur.exectue("PRAGMA foreign_keys = ON") #ensures foreign keys are actually enforced
+cur.execute("PRAGMA foreign_keys = ON") #ensures foreign keys are actually enforced
 
 with open("schema.sql") as f:
     cur.executescript(f.read()) # les all teksten fra filen, og kjør sql setningene i den
@@ -72,6 +72,12 @@ stopp = lag_stopp(avganger)
 cur.executemany(
     "INSERT INTO stopp (stopp_id, avgangs_id, stasjons_id, rekkefolge, ankomst_tid, avgangs_tid) VALUES (?, ?, ?, ?, ?, ?)",
     stopp 
+)
+
+priser = lag_priser()
+cur.executemany(
+    "INSERT INTO priser (pris_id, stasjons_id, billett_type, pris) VALUES (?, ?, ?, ?)",
+    priser,
 )
 
 
