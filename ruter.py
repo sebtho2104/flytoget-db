@@ -17,6 +17,9 @@ RUTER = {
     },
 }
 
+DRAMMEN_IDS = {3701, 3702, 3703, 3704, 3705, 3706, 3707, 3708, 3709, 3710,
+    3711, 3712, 3713, 3714, 3715, 3716, 3717, 3718, 3719, 3720,
+    3721, 3722, 3723, 3724, 3725, 3726, 3727, 3728, 3729, 3730,}
 DIREKTE_IDS = {3731, 3732, 3735, 3736}
 STABEKK_IDS = {3733, 3734}
 
@@ -25,7 +28,9 @@ def rutetype(avgangs_id):
         return "direkte"
     if avgangs_id in STABEKK_IDS:
         return "stabekk"
-    return "drammen"
+    if avgangs_id in DRAMMEN_IDS:
+        return "drammen"
+    raise ValueError(f"Ukjent avgangs_id: {avgangs_id}")
 
 def lag_stopp(avganger):
     stopp = []
