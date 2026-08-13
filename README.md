@@ -68,12 +68,29 @@ den alltid gir et forutsigbart, rent utgangspunkt.
 - `CASE WHEN` – betinget kategorisering direkte i spørringen
 - `LIMIT` og `DISTINCT`
 
+## Testing
+
+Prosjektet har automatiserte enhetstester (`pytest`) for `priser.py` og
+`ruter.py`, som dekker både forventet oppførsel og grensetilfeller.
+Testene avdekket to reelle ting å rette underveis: én test bekreftet at
+funksjonen ikke ved et uhell endrer på delte data mellom kall (noe som
+kunne gitt feil resultat senere), og en annen test viste at en ukjent
+`avgangs_id` ga feil resultat uten varsel — nå kaster koden en tydelig
+feilmelding i stedet.
+
+```bash
+pip install -r requirements.txt
+python -m pytest
+```
+
 ## Prosjektstruktur
 
 ```
-schema.sql    – databasestruktur (alle CREATE TABLE-setninger)
-seed.py       – bygger databasen og fyller den med testdata
-ruter.py      – genererer stopp-data fra rutedefinisjoner
-priser.py     – genererer prisdata fra stasjon og billett-type
-queries.py    – eksempelspørringer mot den ferdige databasen
+schema.sql         – databasestruktur (alle CREATE TABLE-setninger)
+seed.py             – bygger databasen og fyller den med testdata
+ruter.py            – genererer stopp-data fra rutedefinisjoner
+priser.py           – genererer prisdata fra stasjon og billett-type
+queries.py          – eksempelspørringer mot den ferdige databasen
+requirements.txt    – Python-avhengigheter (pytest)
+tests/              – automatiserte enhetstester
 ```
