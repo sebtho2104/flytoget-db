@@ -78,6 +78,8 @@ kunne gitt feil resultat senere), og en annen test viste at en ukjent
 `avgangs_id` ga feil resultat uten varsel — nå kaster koden en tydelig
 feilmelding i stedet.
 
+Kjør testene slik:
+
 ```bash
 pip install -r requirements.txt
 python -m pytest
