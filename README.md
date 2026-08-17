@@ -78,6 +78,14 @@ kunne gitt feil resultat senere), og en annen test viste at en ukjent
 `avgangs_id` ga feil resultat uten varsel — nå kaster koden en tydelig
 feilmelding i stedet.
 
+I tillegg finnes integrasjonstester (`test_integration.py`) som kjører
+hele `seed.py`-prosessen fra start til slutt, og bekrefter at alt fungerer
+riktig sammen – riktig antall rader i alle tabeller, ingen ugyldige
+referanser mellom tabeller, at fremmednøkler faktisk håndheves, og at to
+kjøringer av `seed.py` gir identisk resultat. Hver integrasjonstest kjører
+i sin egen midlertidige mappe (`tmp_path`), slik at testene er fullstendig
+uavhengige av hverandre og av den ekte databasefilen.
+
 Kjør testene slik:
 
 ```bash
@@ -88,11 +96,16 @@ python -m pytest
 ## Prosjektstruktur
 
 ```
-schema.sql         – databasestruktur (alle CREATE TABLE-setninger)
-seed.py             – bygger databasen og fyller den med testdata
-ruter.py            – genererer stopp-data fra rutedefinisjoner
-priser.py           – genererer prisdata fra stasjon og billett-type
-queries.py          – eksempelspørringer mot den ferdige databasen
-requirements.txt    – Python-avhengigheter (pytest)
-tests/              – automatiserte enhetstester
+
+schema.sql – databasestruktur (alle CREATE TABLE-setninger)
+seed.py – bygger databasen og fyller den med testdata
+ruter.py – genererer stopp-data fra rutedefinisjoner
+priser.py – genererer prisdata fra stasjon og billett-type
+queries.py – eksempelspørringer mot den ferdige databasen
+requirements.txt – Python-avhengigheter (pytest)
+tests/
+test_priser.py – enhetstester for prislogikk
+test_ruter.py – enhetstester for rutegenerering
+test_integration.py – integrasjonstester for hele seed-prosessen
+
 ```
