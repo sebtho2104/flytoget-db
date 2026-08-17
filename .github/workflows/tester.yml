@@ -1,0 +1,14 @@
+name: Kjør tester
+
+on: [push] #run every time someone pushes code to GitHub
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest #GitHub sets up a fresh Linux machine to run the tests on
+    steps:
+      - uses: actions/checkout@v4 #fetches the code down to that machine
+      - uses: actions/setup-python@v5 #installs python (version 3.12) on that machine
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt #installs the projects dependencies
+      - run: python -m pytest #runs the tests
