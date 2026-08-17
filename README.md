@@ -96,7 +96,6 @@ python -m pytest
 ## Prosjektstruktur
 
 ```
-
 schema.sql – databasestruktur (alle CREATE TABLE-setninger)
 seed.py – bygger databasen og fyller den med testdata
 ruter.py – genererer stopp-data fra rutedefinisjoner
