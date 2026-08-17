@@ -5,15 +5,15 @@ from priser import lag_priser, hent_pris
 
 DB_FILE = "flytoget.db"
 
-if os.path.exists(DB_FILE): # sjekker og sletter flytoget.db om den finnes
+if os.path.exists(DB_FILE): #check and delete flytoget.db if it exists
     os.remove(DB_FILE)
 
-conn = sqlite3.connect(DB_FILE) # kobler til og lager (om det ikke finnes) database
-cur = conn.cursor() # gjør det mulig å kjøre SQL gjennom tilkoblingen
+conn = sqlite3.connect(DB_FILE) #creates (if it does not exist) and connects to the database
+cur = conn.cursor() # makes it possible to run SQL queries trough the connection
 cur.execute("PRAGMA foreign_keys = ON") #ensures foreign keys are actually enforced
 
 with open("schema.sql", encoding="utf-8") as f:
-    cur.executescript(f.read()) # les all teksten fra filen, og kjør sql setningene i den
+    cur.executescript(f.read()) #read all the text from the file, and run sql queries in it
 
 stasjoner = [
     (1, "Gardemoen"),
